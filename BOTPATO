@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PATO - Bot de Sinais de Apostas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e3a8a 0%, #0ea5e9 100%);
+        }
+        .signal-card {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .signal-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        .green-badge {
+            background-color: #10b981;
+        }
+        .red-badge {
+            background-color: #ef4444;
+        }
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+            }
+        }
+        .telegram-btn {
+            background-color: #0088cc;
+        }
+        .telegram-btn:hover {
+            background-color: #006699;
+        }
+        .tab-active {
+            border-bottom: 3px solid #3b82f6;
+            color: #3b82f6;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+    <!-- Header -->
+    <header class="gradient-bg text-white">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center mb-4 md:mb-0">
+                    <div class="bg-white rounded-full p-2 mr-4">
+                        <i class="fas fa-robot text-3xl text-blue-600"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl md:text-3xl font-bold">PATO BOT</h1>
+                        <p class="text-blue-200">Seu assistente de apostas esportivas</p>
+                    </div>
+                </div>
+                <a href="https://t.me/PatoBetsBot" class="telegram-btn text-white px-6 py-3 rounded-full font-semibold flex items-center transition duration-300">
+                    <i class="fab fa-telegram mr-2 text-xl"></i>
+                    Acessar no Telegram
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg text-white py-12">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">Sinais de Apostas Esportivas com Alta Precisão</h2>
+            <p class="text-xl text-blue-200 mb-8 max-w-3xl mx-auto">Receba sinais pré-live e em tempo real para futebol, baseados em análise estatística avançada e odds do mercado.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                <div class="bg-white bg-opacity-10 p-6 rounded-xl backdrop-blur-sm">
+                    <i class="fas fa-chart-line text-3xl mb-4 text-blue-300"></i>
+                    <h3 class="text-xl font-semibold mb-2">Análise Estatística</h3>
+                    <p class="text-blue-200">Sinais baseados em dados reais de desempenho das equipes</p>
+                </div>
+                <div class="bg-white bg-opacity-10 p-6 rounded-xl backdrop-blur-sm">
+                    <i class="fas fa-bolt text-3xl mb-4 text-blue-300"></i>
+                    <h3 class="text-xl font-semibold mb-2">Tempo Real</h3>
+                    <p class="text-blue-200">Alertas instantâneos durante os jogos para melhores oportunidades</p>
+                </div>
+                <div class="bg-white bg-opacity-10 p-6 rounded-xl backdrop-blur-sm">
+                    <i class="fas fa-shield-alt text-3xl mb-4 text-blue-300"></i>
+                    <h3 class="text-xl font-semibold mb-2">Jogo Responsável</h3>
+                    <p class="text-blue-200">Recomendações equilibradas e alertas de controle</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-12">
+        <!-- Tabs -->
+        <div class="flex border-b border-gray-200 mb-8">
+            <button id="prelive-tab" class="tab-active px-4 py-2 font-medium text-sm mr-2">Pré-Live</button>
+            <button id="live-tab" class="px-4 py-2 font-medium text-sm mr-2">Ao Vivo</button>
+            <button id="stats-tab" class="px-4 py-2 font-medium text-sm">Estatísticas</button>
+        </div>
+
+        <!-- Tab Content -->
+        <div id="prelive-content" class="tab-content">
+            <h2 class="text-2xl font-bold mb-6">Sinais Pré-Live</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Signal Card 1 -->
+                <div class="signal-card bg-white rounded-xl overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full mb-2">Futebol Brasileiro</span>
+                                <h3 class="text-xl font-bold">Flamengo x Corinthians</h3>
+                            </div>
+                            <span class="inline-block bg-green-500 text-white text-xs px-2 py-1 rounded-full">Alta Confiança</span>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-600">Mercado:</span>
+                                <span class="font-semibold">Ambas Marcam (Sim)</span>
+                            </div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-600">Odd:</span>
+                                <span class="font-bold text-green-600">1.90 (Bet365)</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Horário:</span>
+                                <span class="font-semibold">16:00 - 10/06</span>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                            <p class="text-blue-800 italic">"Entrada braba, patrão! Jogo quente, as duas equipes tão voando! 🚀"</p>
+                        </div>
+                        
+                        <div class="flex justify-between items-center">
+                            <a href="#" class="text-blue-600 hover:text-blue-800 text-sm font-medium">Detalhes do jogo →</a>
+                            <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium">Apostar Agora</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Signal Card 2 -->
+                <div class="signal-card bg-white rounded-xl overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full mb-2">Premier League</span>
+                                <h3 class="text-xl font-bold">Manchester City x Arsenal</h3>
+                            </div>
+                            <span class="inline-block bg-yellow-500 text-white text-xs px-2 py-1 rounded-full">Média Confiança</span>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-600">Mercado:</span>
+                                <span class="font-semibold">Over 2.5 Gols</span>
+                            </div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-600">Odd:</span>
+                                <span class="font-bold text-green-600">1.75 (Bet365)</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Horário:</span>
+                                <span class="font-semibold">12:30 - 11/06</span>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                            <p class="text-blue-800 italic">"Clássico que sempre rende gols! Bom momento para entrada no over. ⚽⚽"</p>
+                        </div>
+                        
+                        <div class="flex justify-between items-center">
+                            <a href="#" class="text-blue-600 hover:text-blue-800 text-sm font-medium">Detalhes do jogo →</a>
+                            <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium">Apostar Agora</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Signal Card 3 -->
+                <div class="signal-card bg-white rounded-xl overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full mb-2">Champions League</span>
+                                <h3 class="text-xl font-bold">Real Madrid x Bayern Munich</h3>
+                            </div>
+                            <span class="inline-block bg-green-500 text-white text-xs px-2 py-1 rounded-full">Alta Confiança</span>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-600">Mercado:</span>
+                                <span class="font-semibold">Handicap Ásia (+1.5)</span>
+                            </div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-600">Odd:</span>
+                                <span class="font-bold text-green-600">1.65 (Bet365)</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Horário:</span>
+                                <span class="font-semibold">21:00 - 12/06</span>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                            <p class="text-blue-800 italic">"Jogo equilibrado, proteção no handicap é ótima opção! 🔥"</p>
+                        </div>
+                        
+                        <div class="flex justify-between items-center">
+                            <a href="#" class="text-blue-600 hover:text-blue-800 text-sm font-medium">Detalhes do jogo →</a>
+                            <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium">Apostar Agora</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="live-content" class="tab-content hidden">
+            <h2 class="text-2xl font-bold mb-6">Sinais Ao Vivo</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Live Signal 1 -->
+                <div class="signal-card bg-white rounded-xl overflow-hidden border-l-4 border-red-500">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <span class="inline-block bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full mb-2">AO VIVO</span>
+                                <h3 class="text-xl font-bold">Flamengo 1 x 1 Corinthians</h3>
+                                <p class="text-gray-600">Minuto 65'</p>
+                            </div>
+                            <div class="pulse bg-green-500 text-white text-xs px-2 py-1 rounded-full">OPORTUNIDADE</div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-600">Mercado:</span>
+                                <span class="font-semibold">Over 2.5 Gols</span>
+                            </div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-600">Odd Atual:</span>
+                                <span class="font-bold text-green-600">1.80 (Bet365)</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Odd Inicial:</span>
+                                <span class="font-semibold">1.50</span>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-red-50 p-4 rounded-lg mb-4">
+                            <p class="text-red-800 italic">"Bota fé agora, patrão! Jogo tá pegando fogo, chance alta de golzão! 💥"</p>
+                        </div>
+                        
+                        <div class="flex justify-between items-center">
+                            <div class="flex space-x-2">
+                                <span class="text-xs bg-gray-100 px-2 py-1 rounded">Posse: 55%</span>
+                                <span class="text-xs bg-gray-100 px-2 py-1 rounded">Chutes: 12</span>
+                                <span class="text-xs bg-gray-100 px-2 py-1 rounded">Escanteios: 7</span>
+                            </div>
+                            <a href="#" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium">Apostar Agora</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Signal 2 -->
+                <div class="signal-card bg-white rounded-xl overflow-hidden border-l-4 border-blue-500">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full mb-2">AO VIVO</span>
+                                <h3 class="text-xl font-bold">Palmeiras 0 x 0 São Paulo</h3>
+                                <p class="text-gray-600">Minuto 40'</p>
+                            </div>
+                            <div class="bg-yellow-500 text-white text-xs px-2 py-1 rounded-full">MONITORANDO</div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-600">Mercado Potencial:</span>
+                                <span class="font-semibold">Ambas Marcam 2° Tempo</span>
+                            </div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-600">Odd Atual:</span>
+                                <span class="font-bold text-green-600">2.10 (Bet365)</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Situação:</span>
+                                <span class="font-semibold">Jogo travado</span>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                            <p class="text-blue-800 italic">"Aguardando melhor momento no 2° tempo. Times começando a pressionar mais! 👀"</p>
+                        </div>
+                        
+                        <div class="flex justify-between items-center">
+                            <div class="flex space-x-2">
+                                <span class="text-xs bg-gray-100 px-2 py-1 rounded">Posse: 60%</span>
+                                <span class="text-xs bg-gray-100 px-2 py-1 rounded">Chutes: 5</span>
+                                <span class="text-xs bg-gray-100 px-2 py-1 rounded">Escanteios: 3</span>
+                            </div>
+                            <button class="bg-gray-400 text-white px-4 py-2 rounded-lg text-sm font-medium cursor-not-allowed" disabled>Aguardando</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="stats-content" class="tab-content hidden">
+            <h2 class="text-2xl font-bold mb-6">Estatísticas de Desempenho</h2>
+            
+            <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-center mb-6">
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <p class="text-sm text-green-800">Sinais Enviados</p>
+                        <p class="text-3xl font-bold text-green-600">150</p>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <p class="text-sm text-green-800">Greens</p>
+                        <p class="text-3xl font-bold text-green-600">105</p>
+                        <p class="text-sm text-green-800">70% de acerto</p>
+                    </div>
+                    <div class="bg-red-50 p-4 rounded-lg">
+                        <p class="text-sm text-red-800">Reds</p>
+                        <p class="text-3xl font-bold text-red-600">45</p>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <p class="text-sm text-blue-800">ROI</p>
+                        <p class="text-3xl font-bold text-blue-600">+28%</p>
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold mb-4">Últimos Sinais</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white rounded-lg overflow-hidden">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="py-2 px-4 text-left">Jogo</th>
+                                    <th class="py-2 px-4 text-left">Mercado</th>
+                                    <th class="py-2 px-4 text-left">Odd</th>
+                                    <th class="py-2 px-4 text-left">Resultado</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                <tr>
+                                    <td class="py-3 px-4">Flamengo x Corinthians</td>
+                                    <td class="py-3 px-4">Ambas Marcam</td>
+                                    <td class="py-3 px-4">1.90</td>
+                                    <td class="py-3 px-4"><span class="green-badge text-white text-xs px-2 py-1 rounded-full">Green</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 px-4">Atlético-MG x Internacional</td>
+                                    <td class="py-3 px-4">Over 2.5</td>
+                                    <td class="py-3 px-4">1.85</td>
+                                    <td class="py-3 px-4"><span class="red-badge text-white text-xs px-2 py-1 rounded-full">Red</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 px-4">Botafogo x Vasco</td>
+                                    <td class="py-3 px-4">Handicap +1.5</td>
+                                    <td class="py-3 px-4">1.75</td>
+                                    <td class="py-3 px-4"><span class="green-badge text-white text-xs px-2 py-1 rounded-full">Green</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 px-4">Santos x Cruzeiro</td>
+                                    <td class="py-3 px-4">Ambas Marcam</td>
+                                    <td class="py-3 px-4">2.10</td>
+                                    <td class="py-3 px-4"><span class="green-badge text-white text-xs px-2 py-1 rounded-full">Green</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Desempenho por Mercado</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-white border border-gray-200 rounded-lg p-4">
+                            <h4 class="font-medium mb-2">Ambas Marcam</h4>
+                            <div class="h-4 bg-gray-200 rounded-full mb-2">
+                                <div class="h-4 bg-green-500 rounded-full" style="width: 75%"></div>
+                            </div>
+                            <p class="text-sm text-gray-600">75% acerto (45/60)</p>
+                        </div>
+                        <div class="bg-white border border-gray-200 rounded-lg p-4">
+                            <h4 class="font-medium mb-2">Over 2.5 Gols</h4>
+                            <div class="h-4 bg-gray-200 rounded-full mb-2">
+                                <div class="h-4 bg-green-500 rounded-full" style="width: 68%"></div>
+                            </div>
+                            <p class="text-sm text-gray-600">68% acerto (34/50)</p>
+                        </div>
+                        <div class="bg-white border border-gray-200 rounded-lg p-4">
+                            <h4 class="font-medium mb-2">Handicaps</h4>
+                            <div class="h-4 bg-gray-200 rounded-full mb-2">
+                                <div class="h-4 bg-green-500 rounded-full" style="width: 65%"></div>
+                            </div>
+                            <p class="text-sm text-gray-600">65% acerto (26/40)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-lg mb-6">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-exclamation-circle text-yellow-500 mt-1"></i>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm text-yellow-700">
+                            <span class="font-semibold">Atenção:</span> As estatísticas são baseadas em resultados passados e não garantem retornos futuros. Aposte com responsabilidade.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Features Section -->
+    <section class="bg-gray-50 py-12">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl font-bold text-center mb-12">Como Funciona o Pato Bot</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="bg-blue-100 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-bell text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Sinais Automáticos</h3>
+                    <p class="text-gray-600">Receba alertas de apostas pré-live e ao vivo diretamente no Telegram</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="bg-green-100 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-chart-pie text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Análise de Dados</h3>
+                    <p class="text-gray-600">Sinais baseados em estatísticas de jogos e odds do mercado</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="bg-purple-100 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-robot text-purple-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Comandos Simples</h3>
+                    <p class="text-gray-600">Interaja com o bot através de comandos fáceis como /prelive e /stats</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="bg-red-100 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-shield-alt text-red-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Jogo Responsável</h3>
+                    <p class="text-gray-600">Alertas para manter o controle e evitar excessos</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="gradient-bg text-white py-16">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-2xl md:text-3xl font-bold mb-6">Pronto para Melhorar Seus Resultados?</h2>
+            <p class="text-xl text-blue-200 mb-8 max-w-2xl mx-auto">Junte-se a milhares de usuários que já estão lucrando com os sinais do Pato Bot</p>
+            
+            <div class="flex flex-col md:flex-row justify-center gap-4">
+                <a href="https://t.me/PatoBetsBot" class="telegram-btn text-white px-8 py-4 rounded-full font-semibold flex items-center justify-center transition duration-300">
+                    <i class="fab fa-telegram mr-2 text-xl"></i>
+                    Começar Agora
+                </a>
+                <a href="#" class="bg-white text-blue-600 px-8 py-4 rounded-full font-semibold flex items-center justify-center transition duration-300 hover:bg-gray-100">
+                    <i class="fas fa-question-circle mr-2 text-xl"></i>
+                    Como Funciona
+                </a>
+            </div>
+            
+            <div class="mt-8 text-blue-200 text-sm">
+                <p>🔞 Aposte com responsabilidade. O jogo pode ser viciante.</p>
+                <p>O Pato Bot não garante lucros e deve ser usado como ferramenta auxiliar.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <h3 class="text-xl font-bold">PATO BOT</h3>
+                    <p class="text-gray-400">Seu assistente de apostas esportivas</p>
+                </div>
+                
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                        <i class="fab fa-telegram text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                        <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400 text-sm">
+                <p>© 2023 Pato Bot. Todos os direitos reservados.</p>
+                <p class="mt-2">
+                    <a href="#" class="hover:text-white transition duration-300">Termos de Uso</a> | 
+                    <a href="#" class="hover:text-white transition duration-300">Política de Privacidade</a> | 
+                    <a href="#" class="hover:text-white transition duration-300">Jogo Responsável</a>
+                </p>
+                <p class="mt-2">Este serviço é apenas para maiores de 18 anos.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Tab functionality
+        document.getElementById('prelive-tab').addEventListener('click', function() {
+            showTab('prelive');
+        });
+        
+        document.getElementById('live-tab').addEventListener('click', function() {
+            showTab('live');
+        });
+        
+        document.getElementById('stats-tab').addEventListener('click', function() {
+            showTab('stats');
+        });
+        
+        function showTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('[id$="-tab"]').forEach(tab => {
+                tab.classList.remove('tab-active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName + '-content').classList.remove('hidden');
+            
+            // Add active class to selected tab
+            document.getElementById(tabName + '-tab').classList.add('tab-active');
+        }
+        
+        // Simulate live updates for demo purposes
+        setInterval(() => {
+            const liveTab = document.getElementById('live-tab');
+            if (!liveTab.classList.contains('tab-active')) {
+                liveTab.classList.add('animate-pulse');
+                setTimeout(() => {
+                    liveTab.classList.remove('animate-pulse');
+                }, 2000);
+            }
+        }, 10000);
+    </script>
+</body>
+</html>
